@@ -1,0 +1,192 @@
+name: ❓ Question or Support
+description: Ask a question about usage, implementation, or Islamic calculations
+title: "[Question]: "
+labels: ["question", "needs-response"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your question! Please fill out the form below to help us provide the best answer.
+
+        **Note**: For general discussions, consider using [GitHub Discussions](../../discussions) instead.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before asking a question
+      options:
+        - label: I have searched existing issues and discussions for similar questions
+          required: true
+        - label: I have checked the documentation, README, and API reference
+          required: true
+        - label: I have looked at the examples in the repository
+          required: true
+
+  - type: dropdown
+    id: question-type
+    attributes:
+      label: Question Type
+      description: What type of question is this?
+      options:
+        - "Usage - How to use the SDK"
+        - "Implementation - Integration with my project"
+        - "Calculation - How prayer times are calculated"
+        - "Islamic Jurisprudence - Religious aspects of calculations"
+        - "Performance - Optimization and efficiency"
+        - "Troubleshooting - Something isn't working as expected"
+        - "Comparison - How this SDK compares to others"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: Please ask your question clearly and provide as much context as possible
+      placeholder: |
+        Example: "How do I calculate prayer times for a location that observes daylight saving time?"
+        or "What's the difference between Standard and Hanafi Asr calculations?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and Background
+      description: Provide relevant context about your use case or situation
+      placeholder: |
+        I'm building a mobile app for Muslims in North America and need to handle...
+        I'm implementing a website for a mosque that needs to display...
+        I'm trying to understand why the calculated times differ from...
+
+  - type: textarea
+    id: what-tried
+    attributes:
+      label: What Have You Tried?
+      description: What approaches or solutions have you already attempted?
+      placeholder: |
+        I tried using the MWL method but the times seem different from local mosque...
+        I looked at the documentation but couldn't find information about...
+        I attempted to implement it this way: [code sample]
+
+  - type: textarea
+    id: code-sample
+    attributes:
+      label: Relevant Code (if applicable)
+      description: Include any relevant code that relates to your question
+      render: typescript
+      placeholder: |
+        const sdk = new PrayerTimesSDK(lat, lng, date, timezone, {
+          method: 'MWL',
+          asrJurisdiction: 'Standard'
+        });
+
+        const times = sdk.getTimes();
+        // Question about this implementation...
+
+  - type: input
+    id: location
+    attributes:
+      label: Location (if relevant)
+      description: If your question is location-specific, please provide coordinates or city
+      placeholder: "Riyadh, Saudi Arabia (24.7136, 46.6753) or just the city name"
+
+  - type: dropdown
+    id: calculation-method
+    attributes:
+      label: Calculation Method (if relevant)
+      description: Which calculation method are you asking about?
+      options:
+        - "Not applicable"
+        - "MWL (Muslim World League)"
+        - "ISNA (Islamic Society of North America)"
+        - "Egypt (Egyptian General Authority)"
+        - "Makkah (Umm Al-Qura University)"
+        - "Karachi (University of Islamic Sciences)"
+        - "Custom"
+        - "All methods"
+
+  - type: textarea
+    id: expected-answer
+    attributes:
+      label: What Kind of Answer Are You Looking For?
+      description: Help us understand what would be most helpful to you
+      placeholder: |
+        I'm looking for:
+        - Step-by-step implementation guide
+        - Explanation of Islamic calculation principles
+        - Code examples for my specific use case
+        - Comparison between different approaches
+        - Links to authoritative Islamic sources
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      description: How urgent is your question?
+      options:
+        - "Low - General inquiry"
+        - "Medium - Needed for current project"
+        - "High - Blocking my development"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: experience-level
+    attributes:
+      label: Your Experience Level
+      description: What's your experience level with prayer time calculations?
+      options:
+        - "Beginner - New to Islamic prayer time calculations"
+        - "Intermediate - Some experience with similar libraries"
+        - "Advanced - Experienced with astronomical calculations"
+        - "Expert - Deep knowledge of Islamic jurisprudence and astronomy"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (if relevant)
+      description: Provide environment details if they're relevant to your question
+      placeholder: |
+        - SDK Version: 1.0.0
+        - Platform: Web browser / Node.js / React Native
+        - Framework: React / Vue / Angular / Express
+        - OS: Windows / macOS / Linux
+
+  - type: checkboxes
+    id: islamic-context
+    attributes:
+      label: Islamic Context (if applicable)
+      description: Check if your question involves Islamic jurisprudence considerations
+      options:
+        - label: My question involves differences between Islamic schools of thought (madhabs)
+        - label: My question is about specific regional or cultural prayer time practices
+        - label: I need references to Islamic authorities or scholarly sources
+        - label: My question involves interpretation of Islamic astronomical principles
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: |
+        Any other information that might help us answer your question:
+        - Screenshots or error messages
+        - Links to relevant resources
+        - Specific requirements or constraints
+        - Deadline considerations
+      placeholder: "Add any other relevant information here..."
+
+  - type: checkboxes
+    id: follow-up
+    attributes:
+      label: Follow-up
+      description: How would you like to handle follow-up questions?
+      options:
+        - label: I'm available for follow-up questions in this issue
+        - label: I'd prefer to continue discussion in GitHub Discussions
+        - label: I can help others with similar questions in the future
+        - label: I'd like to contribute documentation based on the answer

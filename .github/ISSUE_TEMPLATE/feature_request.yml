@@ -1,0 +1,193 @@
+name: 💡 Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "needs-discussion"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please fill out the form below to help us understand your request.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting a feature request
+      options:
+        - label: I have searched for existing feature requests that might be similar
+          required: true
+        - label: I have checked the documentation to see if this feature already exists
+          required: true
+        - label: This feature aligns with the project's goals (offline, zero-dependency prayer time calculations)
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A clear and concise description of the feature you'd like to see
+      placeholder: "Add support for calculating Qibla direction based on coordinates..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What use case does it address?
+      placeholder: |
+        Currently, users need to use separate libraries to get Qibla direction.
+        It would be convenient to have this calculation in the same SDK...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: |
+        Add a new method `getQiblaDirection()` that returns the bearing to Mecca from the given coordinates...
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-design
+    attributes:
+      label: Proposed API Design
+      description: If applicable, describe how you envision the API for this feature
+      render: typescript
+      placeholder: |
+        // Example API design
+        const sdk = new PrayerTimesSDK(lat, lng, date, timezone, options);
+
+        // New method
+        const qiblaDirection = sdk.getQiblaDirection();
+        // Returns: { bearing: 245.3, direction: "WSW" }
+
+        // Or as part of existing response
+        const times = sdk.getTimes();
+        // Returns: { fajr: "05:30", ..., qibla: { bearing: 245.3 } }
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature is this?
+      options:
+        - "New calculation method"
+        - "Additional prayer time (e.g., Tahajjud, Ishraq)"
+        - "Output format enhancement"
+        - "Performance improvement"
+        - "Developer experience improvement"
+        - "Documentation improvement"
+        - "Testing enhancement"
+        - "Other (please specify in details)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - "High - Essential for my use case"
+        - "Medium - Would be very helpful"
+        - "Low - Nice to have"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: |
+        Currently using separate library X for this functionality...
+        Considered implementing it myself but would prefer it in the main SDK...
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Describe specific scenarios where this feature would be useful
+      placeholder: |
+        1. Mobile prayer app that shows both prayer times and Qibla direction
+        2. Mosque website that displays complete Islamic information
+        3. Travel app for Muslims visiting new cities
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: compatibility
+    attributes:
+      label: Compatibility Requirements
+      description: Which platforms should this feature support?
+      options:
+        - label: Web browsers
+        - label: Node.js server
+        - label: React Native
+        - label: Electron apps
+        - label: All platforms (preferred)
+
+  - type: textarea
+    id: implementation-notes
+    attributes:
+      label: Implementation Considerations
+      description: Any technical considerations, constraints, or suggestions for implementation
+      placeholder: |
+        - Should maintain zero-dependency requirement
+        - Should not increase bundle size significantly
+        - Should follow existing API patterns
+        - Consider performance implications
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or References
+      description: |
+        Provide examples of similar features in other libraries, algorithms, or reference implementations
+      placeholder: |
+        Similar to feature in library X: [link]
+        Algorithm reference: [link]
+        Islamic authority source: [link]
+
+  - type: dropdown
+    id: breaking-change
+    attributes:
+      label: Breaking Change
+      description: Would this feature require breaking changes to the existing API?
+      options:
+        - "No - Additive only"
+        - "Yes - Minor breaking changes"
+        - "Yes - Major breaking changes"
+        - "Unsure"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution-intent
+    attributes:
+      label: Contribution
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I would be willing to implement this feature myself
+        - label: I can help with research and testing
+        - label: I can provide domain expertise (Islamic jurisprudence, astronomy, etc.)
+        - label: I can help with documentation and examples
+        - label: I can help with testing across different platforms
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: |
+        Any additional information that might be helpful:
+        - Screenshots or mockups
+        - Links to relevant Islamic authorities or sources
+        - Regional or cultural considerations
+        - Performance requirements
+      placeholder: "Add any other context about the feature request here..."

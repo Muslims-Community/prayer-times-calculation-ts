@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times Calculator - Web Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .prayer-time {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .prayer-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .prayer-value {
+            font-size: 24px;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff6b6b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .location-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕌 Prayer Times Calculator</h1>
+
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" placeholder="Enter city name or coordinates">
+            <button onclick="getCurrentLocation()">Use My Location</button>
+        </div>
+
+        <div class="form-group">
+            <label for="latitude">Latitude:</label>
+            <input type="number" id="latitude" step="any" placeholder="e.g., 24.7136">
+        </div>
+
+        <div class="form-group">
+            <label for="longitude">Longitude:</label>
+            <input type="number" id="longitude" step="any" placeholder="e.g., 46.6753">
+        </div>
+
+        <div class="form-group">
+            <label for="timezone">Timezone (UTC offset):</label>
+            <input type="number" id="timezone" step="any" placeholder="e.g., 3 for UTC+3">
+        </div>
+
+        <div class="form-group">
+            <label for="method">Calculation Method:</label>
+            <select id="method">
+                <option value="MWL">Muslim World League (MWL)</option>
+                <option value="ISNA">Islamic Society of North America (ISNA)</option>
+                <option value="Egypt">Egyptian General Authority</option>
+                <option value="Makkah">Umm Al-Qura University (Makkah)</option>
+                <option value="Karachi">University of Islamic Sciences (Karachi)</option>
+                <option value="Custom">Custom Angles</option>
+            </select>
+        </div>
+
+        <div id="custom-angles" style="display: none;">
+            <div class="form-group">
+                <label for="fajr-angle">Fajr Angle (degrees):</label>
+                <input type="number" id="fajr-angle" step="any" placeholder="e.g., 18">
+            </div>
+            <div class="form-group">
+                <label for="isha-angle">Isha Angle (degrees):</label>
+                <input type="number" id="isha-angle" step="any" placeholder="e.g., 17">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="asr-jurisdiction">Asr Calculation:</label>
+            <select id="asr-jurisdiction">
+                <option value="Standard">Standard (Shafi/Maliki/Hanbali)</option>
+                <option value="Hanafi">Hanafi</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date">
+        </div>
+
+        <button onclick="calculatePrayerTimes()">Calculate Prayer Times</button>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="location-info" class="location-info" style="display: none;"></div>
+
+        <div id="prayer-times" class="prayer-times" style="display: none;">
+            <div class="prayer-time">
+                <div class="prayer-name">Fajr (Dawn)</div>
+                <div class="prayer-value" id="fajr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">Sunrise</div>
+                <div class="prayer-value" id="sunrise-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">Dhuhr (Noon)</div>
+                <div class="prayer-value" id="dhuhr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">Asr (Afternoon)</div>
+                <div class="prayer-value" id="asr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">Maghrib (Sunset)</div>
+                <div class="prayer-value" id="maghrib-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">Isha (Night)</div>
+                <div class="prayer-value" id="isha-time">--:--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the SDK - In real usage, you would import from npm -->
+    <script type="module">
+        // For demo purposes, we'll simulate the SDK
+        // In real usage: import { PrayerTimesSDK } from 'prayer-times-calculation';
+
+        // Mock SDK for demonstration
+        class PrayerTimesSDK {
+            constructor(lat, lng, date, timezone, options) {
+                this.lat = lat;
+                this.lng = lng;
+                this.date = date;
+                this.timezone = timezone;
+                this.options = options;
+            }
+
+            getTimes() {
+                // This is a mock implementation for demo
+                // Real SDK would do actual calculations
+                return {
+                    fajr: "05:30",
+                    sunrise: "06:45",
+                    dhuhr: "12:15",
+                    asr: "15:30",
+                    maghrib: "18:00",
+                    isha: "19:30"
+                };
+            }
+        }
+
+        window.PrayerTimesSDK = PrayerTimesSDK;
+    </script>
+
+    <script>
+        // Initialize form with current date
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Show/hide custom angles based on method selection
+        document.getElementById('method').addEventListener('change', function() {
+            const customAngles = document.getElementById('custom-angles');
+            if (this.value === 'Custom') {
+                customAngles.style.display = 'block';
+            } else {
+                customAngles.style.display = 'none';
+            }
+        });
+
+        // Get user's current location
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('latitude').value = position.coords.latitude.toFixed(6);
+                    document.getElementById('longitude').value = position.coords.longitude.toFixed(6);
+
+                    // Auto-detect timezone
+                    const timezone = -new Date().getTimezoneOffset() / 60;
+                    document.getElementById('timezone').value = timezone;
+
+                    showLocationInfo(position.coords.latitude, position.coords.longitude);
+                }, function(error) {
+                    showError('Unable to get your location: ' + error.message);
+                });
+            } else {
+                showError('Geolocation is not supported by this browser.');
+            }
+        }
+
+        function showLocationInfo(lat, lng) {
+            const locationInfo = document.getElementById('location-info');
+            locationInfo.innerHTML = `
+                <strong>📍 Current Location:</strong><br>
+                Latitude: ${lat.toFixed(6)}<br>
+                Longitude: ${lng.toFixed(6)}
+            `;
+            locationInfo.style.display = 'block';
+        }
+
+        function calculatePrayerTimes() {
+            try {
+                hideError();
+
+                // Get form values
+                const latitude = parseFloat(document.getElementById('latitude').value);
+                const longitude = parseFloat(document.getElementById('longitude').value);
+                const timezone = parseFloat(document.getElementById('timezone').value);
+                const method = document.getElementById('method').value;
+                const asrJurisdiction = document.getElementById('asr-jurisdiction').value;
+                const dateStr = document.getElementById('date').value;
+
+                // Validate inputs
+                if (isNaN(latitude) || isNaN(longitude) || isNaN(timezone)) {
+                    throw new Error('Please enter valid latitude, longitude, and timezone values.');
+                }
+
+                if (latitude < -90 || latitude > 90) {
+                    throw new Error('Latitude must be between -90 and 90 degrees.');
+                }
+
+                if (longitude < -180 || longitude > 180) {
+                    throw new Error('Longitude must be between -180 and 180 degrees.');
+                }
+
+                // Prepare options
+                const options = {
+                    method: method,
+                    asrJurisdiction: asrJurisdiction
+                };
+
+                if (method === 'Custom') {
+                    const fajrAngle = parseFloat(document.getElementById('fajr-angle').value);
+                    const ishaAngle = parseFloat(document.getElementById('isha-angle').value);
+
+                    if (isNaN(fajrAngle) || isNaN(ishaAngle)) {
+                        throw new Error('Please enter valid Fajr and Isha angles for custom method.');
+                    }
+
+                    options.fajrAngle = fajrAngle;
+                    options.ishaAngle = ishaAngle;
+                }
+
+                // Create date object
+                const date = dateStr ? new Date(dateStr) : new Date();
+
+                // Calculate prayer times
+                const sdk = new PrayerTimesSDK(latitude, longitude, date, timezone, options);
+                const times = sdk.getTimes();
+
+                // Display results
+                displayPrayerTimes(times);
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayPrayerTimes(times) {
+            document.getElementById('fajr-time').textContent = times.fajr;
+            document.getElementById('sunrise-time').textContent = times.sunrise;
+            document.getElementById('dhuhr-time').textContent = times.dhuhr;
+            document.getElementById('asr-time').textContent = times.asr;
+            document.getElementById('maghrib-time').textContent = times.maghrib;
+            document.getElementById('isha-time').textContent = times.isha;
+
+            document.getElementById('prayer-times').style.display = 'grid';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+
+        // Pre-fill with example data (Riyadh)
+        document.getElementById('latitude').value = '24.7136';
+        document.getElementById('longitude').value = '46.6753';
+        document.getElementById('timezone').value = '3';
+    </script>
+</body>
+</html>

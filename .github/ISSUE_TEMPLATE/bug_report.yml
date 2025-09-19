@@ -1,0 +1,211 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the form below to help us understand and reproduce the issue.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting a bug report
+      options:
+        - label: I have searched for existing issues that might be related to this bug
+          required: true
+        - label: I have checked the documentation and FAQ
+          required: true
+        - label: I am using a supported version of the SDK
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: "Example: Prayer times calculation returns incorrect Fajr time for coordinates..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed steps to reproduce the behavior
+      placeholder: |
+        1. Create SDK instance with coordinates...
+        2. Set options to...
+        3. Call getTimes() method
+        4. Observe incorrect result...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: "Expected Fajr time to be 05:30 based on..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: "Fajr time returned as 04:15 instead of expected 05:30"
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code Sample
+      description: Minimal code sample that demonstrates the issue
+      render: typescript
+      placeholder: |
+        import { PrayerTimesSDK } from 'prayer-times-calculation';
+
+        const sdk = new PrayerTimesSDK(
+          24.7136, // latitude
+          46.6753, // longitude
+          new Date('2025-01-19'),
+          3, // timezone
+          {
+            method: 'MWL',
+            asrJurisdiction: 'Standard'
+          }
+        );
+
+        const times = sdk.getTimes();
+        console.log(times); // Shows incorrect result
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-sdk
+    attributes:
+      label: SDK Version
+      description: Which version of the SDK are you using?
+      options:
+        - "1.0.0"
+        - "0.9.x"
+        - "Other (please specify in Additional Context)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-node
+    attributes:
+      label: Node.js Version
+      description: Which version of Node.js are you using?
+      options:
+        - "20.x"
+        - "18.x"
+        - "16.x"
+        - "14.x"
+        - "Other (please specify in Additional Context)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-platform
+    attributes:
+      label: Platform
+      description: Which platform are you running on?
+      options:
+        - "Node.js Server"
+        - "Web Browser"
+        - "React Native"
+        - "Electron"
+        - "Other (please specify in Additional Context)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-os
+    attributes:
+      label: Operating System
+      description: Which operating system are you using?
+      options:
+        - "Windows"
+        - "macOS"
+        - "Linux"
+        - "Other (please specify in Additional Context)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: calculation-method
+    attributes:
+      label: Calculation Method
+      description: Which calculation method were you using?
+      options:
+        - "MWL (Muslim World League)"
+        - "ISNA (Islamic Society of North America)"
+        - "Egypt (Egyptian General Authority)"
+        - "Makkah (Umm Al-Qura University)"
+        - "Karachi (University of Islamic Sciences)"
+        - "Custom"
+        - "Multiple methods"
+    validations:
+      required: true
+
+  - type: input
+    id: coordinates
+    attributes:
+      label: Coordinates
+      description: The latitude and longitude where the issue occurs
+      placeholder: "Lat: 24.7136, Lng: 46.6753"
+    validations:
+      required: true
+
+  - type: input
+    id: timezone
+    attributes:
+      label: Timezone
+      description: The timezone offset used
+      placeholder: "3 (for UTC+3)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: |
+        Any additional information that might help us understand the issue:
+        - Screenshots or error messages
+        - Comparison with other prayer time sources
+        - Regional or cultural context
+        - Related issues or discussions
+      placeholder: "Add any other context about the problem here..."
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this issue for your use case?
+      options:
+        - "Critical - Blocks core functionality"
+        - "High - Significant impact on functionality"
+        - "Medium - Moderate impact"
+        - "Low - Minor inconvenience"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willing-to-help
+    attributes:
+      label: Contribution
+      description: Are you willing to help fix this issue?
+      options:
+        - label: I would be willing to submit a pull request to fix this issue
+        - label: I can help test potential fixes
+        - label: I can provide additional information if needed

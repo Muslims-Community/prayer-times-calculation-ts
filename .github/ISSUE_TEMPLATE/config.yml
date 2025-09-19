@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/your-username/prayer-times-calculation/discussions
+    about: General discussions, ideas, and community Q&A
+  - name: 📖 Documentation
+    url: https://github.com/your-username/prayer-times-calculation/tree/main/docs
+    about: Comprehensive documentation and API reference
+  - name: 🚀 Examples
+    url: https://github.com/your-username/prayer-times-calculation/tree/main/examples
+    about: Code examples for different platforms and use cases
+  - name: 🔒 Security Issues
+    url: https://github.com/your-username/prayer-times-calculation/security/advisories/new
+    about: Report security vulnerabilities privately

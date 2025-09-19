@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نماز کے اوقات کیلکولیٹر - ویب مثال</title>
+    <style>
+        body {
+            font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Urdu Typesetting', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2E8B57 0%, #228B22 50%, #006400 100%);
+            min-height: 100vh;
+            color: white;
+            direction: rtl;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .islamic-quote {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border-right: 4px solid #FFD700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            text-align: right;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            text-align: right;
+        }
+
+        button {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #2E8B57;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .prayer-time {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .prayer-time:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .prayer-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        .prayer-value {
+            font-size: 28px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-weight: bold;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .location-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-right: 4px solid #FFD700;
+        }
+
+        .city-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .city-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .city-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+        }
+
+        .current-time {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕌 نماز کے اوقات کیلکولیٹر</h1>
+
+        <div class="islamic-quote">
+            "اور نماز قائم کرو اور زکوٰۃ دو" - القرآن الکریم
+        </div>
+
+        <div class="current-time" id="current-time">
+            موجودہ وقت: <span id="live-clock"></span>
+        </div>
+
+        <div class="city-buttons">
+            <button class="city-btn" onclick="setCity(24.8607, 67.0011, 'کراچی')">کراچی</button>
+            <button class="city-btn" onclick="setCity(31.5497, 74.3436, 'لاہور')">لاہور</button>
+            <button class="city-btn" onclick="setCity(33.6844, 73.0479, 'اسلام آباد')">اسلام آباد</button>
+            <button class="city-btn" onclick="setCity(34.0151, 71.5249, 'پشاور')">پشاور</button>
+            <button class="city-btn" onclick="setCity(30.1798, 66.9750, 'کوئٹہ')">کوئٹہ</button>
+            <button class="city-btn" onclick="setCity(25.3960, 68.3578, 'حیدرآباد')">حیدرآباد</button>
+        </div>
+
+        <div class="form-group">
+            <label for="location">شہر کا نام:</label>
+            <input type="text" id="location" placeholder="شہر کا نام درج کریں یا نیچے coordinates استعمال کریں">
+            <button onclick="getCurrentLocation()">میری موجودہ لوکیشن استعمال کریں</button>
+        </div>
+
+        <div class="form-group">
+            <label for="latitude">خط عرض (Latitude):</label>
+            <input type="number" id="latitude" step="any" placeholder="مثال: 24.8607">
+        </div>
+
+        <div class="form-group">
+            <label for="longitude">خط طول (Longitude):</label>
+            <input type="number" id="longitude" step="any" placeholder="مثال: 67.0011">
+        </div>
+
+        <div class="form-group">
+            <label for="timezone">ٹائم زون (UTC سے فرق):</label>
+            <input type="number" id="timezone" step="any" placeholder="مثال: 5 (پاکستان کے لیے)">
+        </div>
+
+        <div class="form-group">
+            <label for="method">حساب کتاب کا طریقہ:</label>
+            <select id="method">
+                <option value="Karachi">جامعہ علوم اسلامیہ (کراچی) - پاکستان</option>
+                <option value="MWL">رابطہ عالم اسلامی (MWL) - عالمی</option>
+                <option value="ISNA">اسلامک سوسائٹی آف نارتھ امریکا</option>
+                <option value="Egypt">مصری عام سروے اتھارٹی</option>
+                <option value="Makkah">جامعہ ام القریٰ (مکہ مکرمہ)</option>
+                <option value="Custom">اپنے زاویے (Custom)</option>
+            </select>
+        </div>
+
+        <div id="custom-angles" style="display: none;">
+            <div class="form-group">
+                <label for="fajr-angle">فجر کا زاویہ (ڈگریوں میں):</label>
+                <input type="number" id="fajr-angle" step="any" placeholder="مثال: 18">
+            </div>
+            <div class="form-group">
+                <label for="isha-angle">عشاء کا زاویہ (ڈگریوں میں):</label>
+                <input type="number" id="isha-angle" step="any" placeholder="مثال: 18">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="asr-jurisdiction">عصر کا طریقہ:</label>
+            <select id="asr-jurisdiction">
+                <option value="Standard">عام طریقہ (شافعی/مالکی/حنبلی)</option>
+                <option value="Hanafi">حنفی طریقہ</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="date">تاریخ:</label>
+            <input type="date" id="date">
+        </div>
+
+        <button onclick="calculatePrayerTimes()">نماز کے اوقات کا حساب لگائیں</button>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="location-info" class="location-info" style="display: none;"></div>
+
+        <div id="prayer-times" class="prayer-times" style="display: none;">
+            <div class="prayer-time">
+                <div class="prayer-name">فجر</div>
+                <div class="prayer-value" id="fajr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">طلوع آفتاب</div>
+                <div class="prayer-value" id="sunrise-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">ظہر</div>
+                <div class="prayer-value" id="dhuhr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">عصر</div>
+                <div class="prayer-value" id="asr-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">مغرب</div>
+                <div class="prayer-value" id="maghrib-time">--:--</div>
+            </div>
+            <div class="prayer-time">
+                <div class="prayer-name">عشاء</div>
+                <div class="prayer-value" id="isha-time">--:--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SDK کا محاکاۃ - حقیقی استعمال میں npm سے import کریں -->
+    <script type="module">
+        // محاکاۃ للعرض - في الاستخدام الحقيقي: import { PrayerTimesSDK } from 'prayer-times-calculation';
+
+        class PrayerTimesSDK {
+            constructor(lat, lng, date, timezone, options) {
+                this.lat = lat;
+                this.lng = lng;
+                this.date = date;
+                this.timezone = timezone;
+                this.options = options;
+            }
+
+            getTimes() {
+                // یہ صرف مثال کے لیے ہے - حقیقی SDK اصل حسابات کرے گا
+                const baseHour = 5;
+                return {
+                    fajr: this.formatTime(baseHour, 30),
+                    sunrise: this.formatTime(baseHour + 1, 15),
+                    dhuhr: this.formatTime(12, 15),
+                    asr: this.formatTime(15, 30),
+                    maghrib: this.formatTime(18, 0),
+                    isha: this.formatTime(19, 30)
+                };
+            }
+
+            formatTime(hours, minutes) {
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            }
+        }
+
+        window.PrayerTimesSDK = PrayerTimesSDK;
+    </script>
+
+    <script>
+        // صفحہ لوڈ ہونے پر تاریخ سیٹ کریں
+        document.getElementById('date').valueAsDate = new Date();
+
+        // زندہ گھڑی
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleString('ur-PK', {
+                timeZone: 'Asia/Karachi',
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('live-clock').textContent = timeString;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // کسٹم زاویوں کو دکھانا/چھپانا
+        document.getElementById('method').addEventListener('change', function() {
+            const customAngles = document.getElementById('custom-angles');
+            if (this.value === 'Custom') {
+                customAngles.style.display = 'block';
+            } else {
+                customAngles.style.display = 'none';
+            }
+        });
+
+        // شہر سیٹ کرنے کا فنکشن
+        function setCity(lat, lng, cityName) {
+            document.getElementById('latitude').value = lat.toFixed(6);
+            document.getElementById('longitude').value = lng.toFixed(6);
+            document.getElementById('timezone').value = '5'; // پاکستان کا ٹائم زون
+            document.getElementById('location').value = cityName;
+
+            showLocationInfo(lat, lng, cityName);
+        }
+
+        // موجودہ لوکیشن حاصل کرنا
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    document.getElementById('latitude').value = lat.toFixed(6);
+                    document.getElementById('longitude').value = lng.toFixed(6);
+
+                    // ٹائم زون خود کار طور پر پتہ لگانا
+                    const timezone = -new Date().getTimezoneOffset() / 60;
+                    document.getElementById('timezone').value = timezone;
+
+                    showLocationInfo(lat, lng, 'آپ کی موجودہ لوکیشن');
+                }, function(error) {
+                    showError('آپ کی لوکیشن حاصل نہیں کر سکے: ' + error.message);
+                });
+            } else {
+                showError('آپ کا براؤزر جغرافیائی لوکیشن کو سپورٹ نہیں کرتا۔');
+            }
+        }
+
+        function showLocationInfo(lat, lng, locationName) {
+            const locationInfo = document.getElementById('location-info');
+            locationInfo.innerHTML = `
+                <strong>📍 ${locationName}</strong><br>
+                خط عرض: ${lat.toFixed(6)}<br>
+                خط طول: ${lng.toFixed(6)}<br>
+                ٹائم زون: UTC+${document.getElementById('timezone').value}
+            `;
+            locationInfo.style.display = 'block';
+        }
+
+        function calculatePrayerTimes() {
+            try {
+                hideError();
+
+                // فارم سے ڈیٹا لینا
+                const latitude = parseFloat(document.getElementById('latitude').value);
+                const longitude = parseFloat(document.getElementById('longitude').value);
+                const timezone = parseFloat(document.getElementById('timezone').value);
+                const method = document.getElementById('method').value;
+                const asrJurisdiction = document.getElementById('asr-jurisdiction').value;
+                const dateStr = document.getElementById('date').value;
+
+                // ڈیٹا کی جانچ
+                if (isNaN(latitude) || isNaN(longitude) || isNaN(timezone)) {
+                    throw new Error('براہ کرم صحیح خط عرض، خط طول اور ٹائم زون درج کریں۔');
+                }
+
+                if (latitude < -90 || latitude > 90) {
+                    throw new Error('خط عرض -90 سے 90 ڈگری کے درمیان ہونا چاہیے۔');
+                }
+
+                if (longitude < -180 || longitude > 180) {
+                    throw new Error('خط طول -180 سے 180 ڈگری کے درمیان ہونا چاہیے۔');
+                }
+
+                // اختیارات تیار کرنا
+                const options = {
+                    method: method,
+                    asrJurisdiction: asrJurisdiction
+                };
+
+                if (method === 'Custom') {
+                    const fajrAngle = parseFloat(document.getElementById('fajr-angle').value);
+                    const ishaAngle = parseFloat(document.getElementById('isha-angle').value);
+
+                    if (isNaN(fajrAngle) || isNaN(ishaAngle)) {
+                        throw new Error('کسٹم طریقے کے لیے فجر اور عشاء کے زاویے درج کریں۔');
+                    }
+
+                    options.fajrAngle = fajrAngle;
+                    options.ishaAngle = ishaAngle;
+                }
+
+                // تاریخ کا آبجیکٹ بنانا
+                const date = dateStr ? new Date(dateStr) : new Date();
+
+                // نماز کے اوقات کا حساب
+                const sdk = new PrayerTimesSDK(latitude, longitude, date, timezone, options);
+                const times = sdk.getTimes();
+
+                // نتائج دکھانا
+                displayPrayerTimes(times);
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayPrayerTimes(times) {
+            // اردو میں اوقات کو 12-hour فارمیٹ میں تبدیل کرنا
+            function formatUrduTime(time24) {
+                const [hours, minutes] = time24.split(':').map(Number);
+                const period = hours >= 12 ? 'شام' : 'صبح';
+                const hours12 = hours % 12 || 12;
+                return `${hours12}:${minutes.toString().padStart(2, '0')} ${period}`;
+            }
+
+            document.getElementById('fajr-time').textContent = formatUrduTime(times.fajr);
+            document.getElementById('sunrise-time').textContent = formatUrduTime(times.sunrise);
+            document.getElementById('dhuhr-time').textContent = formatUrduTime(times.dhuhr);
+            document.getElementById('asr-time').textContent = formatUrduTime(times.asr);
+            document.getElementById('maghrib-time').textContent = formatUrduTime(times.maghrib);
+            document.getElementById('isha-time').textContent = formatUrduTime(times.isha);
+
+            document.getElementById('prayer-times').style.display = 'grid';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+
+        // ابتدائی ڈیٹا (کراچی)
+        setCity(24.8607, 67.0011, 'کراچی');
+    </script>
+</body>
+</html>

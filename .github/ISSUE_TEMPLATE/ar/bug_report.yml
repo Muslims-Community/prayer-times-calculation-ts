@@ -1,0 +1,211 @@
+name: 🐛 تقرير خطأ
+description: الإبلاغ عن خطأ أو سلوك غير متوقع
+title: "[خطأ]: "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        شكراً لك على أخذ الوقت للإبلاغ عن خطأ! يرجى ملء النموذج أدناه لمساعدتنا في فهم وإعادة إنتاج المشكلة.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: المتطلبات المسبقة
+      description: يرجى تأكيد ما يلي قبل تقديم تقرير الخطأ
+      options:
+        - label: بحثت عن القضايا الموجودة التي قد تكون مرتبطة بهذا الخطأ
+          required: true
+        - label: راجعت التوثيق والأسئلة الشائعة
+          required: true
+        - label: أستخدم إصداراً مدعوماً من المكتبة
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: وصف الخطأ
+      description: وصف واضح ومقتضب لما هو الخطأ
+      placeholder: "مثال: حساب مواقيت الصلاة يعيد وقت فجر غير صحيح للإحداثيات..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: خطوات إعادة الإنتاج
+      description: خطوات مفصلة لإعادة إنتاج السلوك
+      placeholder: |
+        1. أنشئ نسخة SDK بالإحداثيات...
+        2. اضبط الخيارات على...
+        3. استدع طريقة getTimes()
+        4. لاحظ النتيجة غير الصحيحة...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: السلوك المتوقع
+      description: ماذا يجب أن يحدث بدلاً من ذلك؟
+      placeholder: "توقعت أن يكون وقت الفجر 05:30 بناءً على..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: السلوك الفعلي
+      description: ماذا حدث فعلياً؟
+      placeholder: "عاد وقت الفجر 04:15 بدلاً من 05:30 المتوقع"
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: عينة الكود
+      description: عينة كود بسيطة توضح المشكلة
+      render: typescript
+      placeholder: |
+        import { PrayerTimesSDK } from 'prayer-times-calculation';
+
+        const sdk = new PrayerTimesSDK(
+          24.7136, // خط العرض
+          46.6753, // خط الطول
+          new Date('2025-01-19'),
+          3, // المنطقة الزمنية
+          {
+            method: 'MWL',
+            asrJurisdiction: 'Standard'
+          }
+        );
+
+        const times = sdk.getTimes();
+        console.log(times); // يظهر نتيجة غير صحيحة
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-sdk
+    attributes:
+      label: إصدار المكتبة
+      description: أي إصدار من المكتبة تستخدم؟
+      options:
+        - "1.0.0"
+        - "0.9.x"
+        - "أخرى (يرجى التحديد في السياق الإضافي)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-node
+    attributes:
+      label: إصدار Node.js
+      description: أي إصدار من Node.js تستخدم؟
+      options:
+        - "20.x"
+        - "18.x"
+        - "16.x"
+        - "14.x"
+        - "أخرى (يرجى التحديد في السياق الإضافي)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-platform
+    attributes:
+      label: المنصة
+      description: أي منصة تعمل عليها؟
+      options:
+        - "خادم Node.js"
+        - "متصفح الويب"
+        - "React Native"
+        - "Electron"
+        - "أخرى (يرجى التحديد في السياق الإضافي)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment-os
+    attributes:
+      label: نظام التشغيل
+      description: أي نظام تشغيل تستخدم؟
+      options:
+        - "Windows"
+        - "macOS"
+        - "Linux"
+        - "أخرى (يرجى التحديد في السياق الإضافي)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: calculation-method
+    attributes:
+      label: طريقة الحساب
+      description: أي طريقة حساب كنت تستخدم؟
+      options:
+        - "MWL (رابطة العالم الإسلامي)"
+        - "ISNA (الجمعية الإسلامية لأمريكا الشمالية)"
+        - "Egypt (الهيئة المصرية العامة للمساحة)"
+        - "Makkah (جامعة أم القرى)"
+        - "Karachi (جامعة العلوم الإسلامية)"
+        - "Custom (مخصص)"
+        - "طرق متعددة"
+    validations:
+      required: true
+
+  - type: input
+    id: coordinates
+    attributes:
+      label: الإحداثيات
+      description: خط العرض والطول حيث تحدث المشكلة
+      placeholder: "خط العرض: 24.7136، خط الطول: 46.6753"
+    validations:
+      required: true
+
+  - type: input
+    id: timezone
+    attributes:
+      label: المنطقة الزمنية
+      description: إزاحة المنطقة الزمنية المستخدمة
+      placeholder: "3 (لـ UTC+3)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: السياق الإضافي
+      description: |
+        أي معلومات إضافية قد تساعدنا في فهم المشكلة:
+        - لقطات شاشة أو رسائل خطأ
+        - مقارنة مع مصادر مواقيت الصلاة الأخرى
+        - السياق الإقليمي أو الثقافي
+        - القضايا أو المناقشات ذات الصلة
+      placeholder: "أضف أي سياق آخر حول المشكلة هنا..."
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: الخطورة
+      description: ما مدى خطورة هذه المشكلة لحالة الاستخدام الخاصة بك؟
+      options:
+        - "حرجة - تمنع الوظائف الأساسية"
+        - "عالية - تأثير كبير على الوظائف"
+        - "متوسطة - تأثير معتدل"
+        - "منخفضة - إزعاج بسيط"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willing-to-help
+    attributes:
+      label: المساهمة
+      description: هل ترغب في المساعدة في إصلاح هذه المشكلة؟
+      options:
+        - label: سأكون مستعداً لتقديم طلب سحب لإصلاح هذه المشكلة
+        - label: يمكنني المساعدة في اختبار الإصلاحات المحتملة
+        - label: يمكنني تقديم معلومات إضافية عند الحاجة

@@ -1,0 +1,204 @@
+name: 💡 نیا فیچر کی درخواست
+description: نئے فیچر یا بہتری کی تجویز دیں
+title: "[فیچر]: "
+labels: ["enhancement", "needs-discussion"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        نیا فیچر تجویز کرنے کا شکریہ! آپ کی درخواست کو سمجھنے میں ہماری مدد کے لیے نیچے کا فارم بھریں۔
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: ابتدائی ضروریات
+      description: فیچر کی درخواست جمع کرنے سے پہلے براہ کرم یہ تصدیق کریں
+      options:
+        - label: میں نے موجودہ فیچر کی درخواستیں تلاش کی ہیں جو ملتی جلتی ہو سکتی ہیں
+          required: true
+        - label: میں نے documentation دیکھی ہے کہ یہ فیچر پہلے سے موجود ہے یا نہیں
+          required: true
+        - label: یہ فیچر project کے مقاصد (offline نماز کے اوقات کا حساب بغیر dependencies) کے ساتھ align کرتا ہے
+          required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: فیچر کا خلاصہ
+      description: آپ جو فیچر دیکھنا چاہتے ہیں اس کی واضح اور مختصر وضاحت
+      placeholder: "قبلہ کی سمت کا calculation coordinates کی بنیاد پر شامل کریں..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: مسئلے کا بیان
+      description: یہ فیچر کون سا مسئلہ حل کرتا ہے؟ یہ کون سا use case address کرتا ہے؟
+      placeholder: |
+        فی الوقت، users کو قبلہ کی سمت کے لیے الگ libraries استعمال کرنے پڑتے ہیں۔
+        یہ calculation اسی library میں ہونا مناسب ہوگا...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: تجویز کردہ حل
+      description: آپ جو solution implement ہوتے دیکھنا چاہتے ہیں اس کی وضاحت کریں
+      placeholder: |
+        نیا method `getQiblaDirection()` شامل کریں جو دیے گئے coordinates سے مکہ کی سمت return کرے...
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-design
+    attributes:
+      label: تجویز کردہ API Design
+      description: اگر ممکن ہو تو، اس فیچر کے API کو آپ کیسے imagine کرتے ہیں اس کی وضاحت کریں
+      render: typescript
+      placeholder: |
+        // API design کی مثال
+        const sdk = new PrayerTimesSDK(lat, lng, date, timezone, options);
+
+        // نیا method
+        const qiblaDirection = sdk.getQiblaDirection();
+        // returns: { bearing: 245.3, direction: "WSW" }
+
+        // یا موجودہ response کے حصے کے طور پر
+        const times = sdk.getTimes();
+        // returns: { fajr: "05:30", ..., qibla: { bearing: 245.3 } }
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: فیچر کا قسم
+      description: یہ کس قسم کا فیچر ہے؟
+      options:
+        - "نیا calculation method"
+        - "اضافی نماز کا وقت (جیسے تہجد، اشراق)"
+        - "output formatting کی بہتری"
+        - "performance کی بہتری"
+        - "developer experience کی بہتری"
+        - "documentation کی بہتری"
+        - "testing کی بہتری"
+        - "اور (براہ کرم details میں مخصوص کریں)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: ترجیح
+      description: آپ کے لیے یہ فیچر کتنا اہم ہے؟
+      options:
+        - "High - میرے use case کے لیے ضروری"
+        - "Medium - بہت مفید ہوگا"
+        - "Low - اچھا ہونا nice to have"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: غور شدہ متبادل
+      description: کیا آپ نے کوئی متبادل solutions یا workarounds پر غور کیا ہے؟
+      placeholder: |
+        فی الوقت میں اس functionality کے لیے الگ library X استعمال کرتا ہوں...
+        میں نے خود implement کرنے پر غور کیا لیکن main library میں ہونا پسند کروں گا...
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: مخصوص scenarios کی وضاحت کریں جہاں یہ فیچر مفید ہوگا
+      placeholder: |
+        1. موبائل نماز کی app جو نماز کے اوقات اور قبلہ کی سمت دونوں دکھائے
+        2. مسجد کی website جو مکمل اسلامی معلومات فراہم کرے
+        3. مسلمان مسافروں کے لیے travel app جو نئے شہروں میں جائیں
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: compatibility
+    attributes:
+      label: مطابقت کی ضروریات
+      description: اس فیچر کو کون سے platforms support کرنا چاہیے؟
+      options:
+        - label: Web browsers
+        - label: Node.js server
+        - label: React Native
+        - label: Electron apps
+        - label: تمام platforms (ترجیحی)
+
+  - type: textarea
+    id: implementation-notes
+    attributes:
+      label: Implementation کے تحفظات
+      description: کوئی technical considerations، constraints، یا implementation کی تجاویز
+      placeholder: |
+        - بیرونی dependencies کی عدم موجودگی کی ضرورت کو برقرار رکھنا چاہیے
+        - package size کو نمایاں طور پر نہیں بڑھانا چاہیے
+        - موجودہ API patterns کو follow کرنا چاہیے
+        - performance implications پر غور کرنا چاہیے
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: مثالیں یا حوالے
+      description: |
+        دوسری libraries میں ملتے جلتے features، algorithms، یا reference implementations کی مثالیں دیں
+      placeholder: |
+        library X میں ملتا جلتا فیچر: [link]
+        algorithm کا حوالہ: [link]
+        اسلامی authority کا source: [link]
+
+  - type: dropdown
+    id: breaking-change
+    attributes:
+      label: Breaking Change
+      description: کیا یہ فیچر موجودہ API میں breaking changes کی ضرورت ہوگی؟
+      options:
+        - "نہیں - صرف additive"
+        - "ہاں - معمولی breaking changes"
+        - "ہاں - بڑے breaking changes"
+        - "یقین نہیں"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution-intent
+    attributes:
+      label: شراکت
+      description: کیا آپ اس فیچر کو implement کرنے میں مدد کرنا چاہیں گے؟
+      options:
+        - label: میں خود اس فیچر کو implement کرنے کو تیار ہوں
+        - label: میں research اور testing میں مدد کر سکتا ہوں
+        - label: میں domain expertise فراہم کر سکتا ہوں (اسلامی فقہ، astronomy، وغیرہ)
+        - label: میں documentation اور examples میں مدد کر سکتا ہوں
+        - label: میں مختلف platforms پر testing میں مدد کر سکتا ہوں
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: اضافی Context
+      description: |
+        کوئی اور معلومات جو مفید ہو سکتی ہے:
+        - Screenshots یا mockups
+        - متعلقہ اسلامی authorities یا sources کے links
+        - علاقائی یا ثقافتی considerations
+        - performance requirements
+      placeholder: "فیچر کی درخواست کے بارے میں کوئی اور context یہاں شامل کریں..."
+
+  - type: textarea
+    id: islamic-context
+    attributes:
+      label: اسلامی Context (اگر applicable ہو)
+      description: اگر فیچر کی درخواست دینی یا فقہی پہلوؤں سے متعلق ہے
+      placeholder: |
+        - اسلامی authorities سے حوالے
+        - فقہی مذاہب کے اختلافات
+        - علاقائی یا ثقافتی considerations
+        - فتاویٰ یا شرعی احکام کے sources

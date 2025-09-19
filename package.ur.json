@@ -1,0 +1,448 @@
+{
+  "name": "prayer-times-calculation",
+  "version": "1.0.0",
+  "description": "ایک ہلکا پھلکا، تیز اور درست TypeScript library نماز کے اوقات کا حساب لگانے کے لیے۔ بغیر انٹرنیٹ کنکشن کے کام کرتا ہے",
+  "description_ur": "ایک ہلکا پھلکا، تیز اور درست TypeScript library نماز کے اوقات کا حساب لگانے کے لیے۔ بغیر انٹرنیٹ کنکشن کے کام کرتا ہے",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && npm run build:esm",
+    "build:esm": "tsc --module esnext --outDir dist/esm && mv dist/esm/index.js dist/index.esm.js && rm -rf dist/esm",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "prayer-times",
+    "نماز-کے-اوقات",
+    "islam",
+    "اسلام",
+    "salah",
+    "نماز",
+    "offline",
+    "آف-لائن",
+    "calculation",
+    "حساب-کتاب",
+    "sdk",
+    "typescript",
+    "فجر",
+    "ظہر",
+    "عصر",
+    "مغرب",
+    "عشاء",
+    "islamic-prayer",
+    "muslim",
+    "مسلم",
+    "qibla-direction",
+    "قبلہ-کی-سمت",
+    "astronomical",
+    "فلکیاتی",
+    "mwl",
+    "isna",
+    "egypt",
+    "makkah",
+    "karachi",
+    "pakistan",
+    "پاکستان",
+    "urdu",
+    "اردو"
+  ],
+  "keywords_ur": [
+    "نماز کے اوقات",
+    "نماز کا وقت",
+    "اسلام",
+    "نماز",
+    "فجر",
+    "طلوع آفتاب",
+    "ظہر",
+    "عصر",
+    "مغرب",
+    "عشاء",
+    "مسلم",
+    "اسلامی",
+    "آف لائن",
+    "فلکیاتی حسابات",
+    "رابطہ عالم اسلامی",
+    "جامعہ ام القریٰ",
+    "جامعہ علوم اسلامیہ",
+    "مصری اتھارٹی",
+    "حنفی",
+    "شافعی",
+    "مالکی",
+    "حنبلی",
+    "کراچی",
+    "لاہور",
+    "اسلام آباد",
+    "پاکستان",
+    "بنگلادیش",
+    "بھارت"
+  ],
+  "author": "Prayer Times SDK Team",
+  "author_ur": "نماز کے اوقات SDK ٹیم",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/prayer-times-calculation.git"
+  },
+  "homepage": "https://github.com/your-username/prayer-times-calculation#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/prayer-times-calculation/issues"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "README.ar.md",
+    "README.ur.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/your-username"
+  },
+  "preferGlobal": false,
+  "private": false,
+  "directories": {
+    "lib": "dist",
+    "test": "tests",
+    "example": "examples",
+    "doc": "docs"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", {
+        "targets": {
+          "node": "14"
+        }
+      }],
+      "@babel/preset-typescript"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "./.eslintrc.json"
+    ]
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "coverage/**",
+      "tests/**",
+      "dist/**"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "contributors": [
+    {
+      "name": "Prayer Times SDK Team",
+      "name_ur": "نماز کے اوقات SDK ٹیم",
+      "email": "team@prayer-times-sdk.org",
+      "url": "https://github.com/your-username/prayer-times-calculation"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Prayer Times SDK Team",
+      "name_ur": "نماز کے اوقات SDK ٹیم",
+      "email": "maintainers@prayer-times-sdk.org"
+    }
+  ],
+  "translations": {
+    "ar": {
+      "readme": "README.ar.md",
+      "contributing": "CONTRIBUTING.ar.md",
+      "codeOfConduct": "CODE_OF_CONDUCT.ar.md",
+      "api": "docs/ar/API.md",
+      "examples": "examples/ar/"
+    },
+    "ur": {
+      "readme": "README.ur.md",
+      "contributing": "CONTRIBUTING.ur.md",
+      "codeOfConduct": "CODE_OF_CONDUCT.ur.md",
+      "api": "docs/ur/API.md",
+      "examples": "examples/ur/"
+    }
+  },
+  "localization": {
+    "supported_languages": ["en", "ar", "ur"],
+    "default_language": "en",
+    "fallback_language": "en",
+    "translations_dir": "translations/",
+    "auto_detect": true,
+    "rtl_languages": ["ar", "ur"]
+  },
+  "islamic": {
+    "calculation_methods": [
+      "MWL",
+      "ISNA",
+      "Egypt",
+      "Makkah",
+      "Karachi",
+      "Custom"
+    ],
+    "calculation_methods_ar": [
+      "رابطة العالم الإسلامي",
+      "الجمعية الإسلامية لأمريكا الشمالية",
+      "الهيئة المصرية العامة للمساحة",
+      "جامعة أم القرى",
+      "جامعة العلوم الإسلامية",
+      "زوايا مخصصة"
+    ],
+    "calculation_methods_ur": [
+      "رابطہ عالم اسلامی",
+      "اسلامک سوسائٹی آف نارتھ امریکا",
+      "مصری عام سروے اتھارٹی",
+      "جامعہ ام القریٰ",
+      "جامعہ علوم اسلامیہ",
+      "اپنے زاویے"
+    ],
+    "asr_jurisdictions": ["Standard", "Hanafi"],
+    "asr_jurisdictions_ar": ["العادي", "الحنفي"],
+    "asr_jurisdictions_ur": ["عام طریقہ", "حنفی طریقہ"],
+    "prayer_names": {
+      "fajr": "الفجر",
+      "sunrise": "الشروق",
+      "dhuhr": "الظهر",
+      "asr": "العصر",
+      "maghrib": "المغرب",
+      "isha": "العشاء"
+    },
+    "prayer_names_ur": {
+      "fajr": "فجر",
+      "sunrise": "طلوع آفتاب",
+      "dhuhr": "ظہر",
+      "asr": "عصر",
+      "maghrib": "مغرب",
+      "isha": "عشاء"
+    },
+    "supported_regions": [
+      "Middle East",
+      "North Africa",
+      "South Asia",
+      "Southeast Asia",
+      "Europe",
+      "North America",
+      "Global"
+    ],
+    "supported_regions_ar": [
+      "الشرق الأوسط",
+      "شمال أفريقيا",
+      "جنوب آسيا",
+      "جنوب شرق آسيا",
+      "أوروبا",
+      "أمريكا الشمالية",
+      "عالمي"
+    ],
+    "supported_regions_ur": [
+      "مشرق وسطیٰ",
+      "شمالی افریقہ",
+      "جنوبی ایشیا",
+      "جنوب مشرقی ایشیا",
+      "یورپ",
+      "شمالی امریکہ",
+      "عالمی"
+    ]
+  },
+  "performance": {
+    "execution_time": "<10ms",
+    "memory_usage": "<100KB",
+    "package_size": "<50KB",
+    "accuracy": "±1 minute"
+  },
+  "performance_ar": {
+    "execution_time": "أقل من 10 مللي ثانية",
+    "memory_usage": "أقل من 100 كيلوبايت",
+    "package_size": "أقل من 50 كيلوبايت",
+    "accuracy": "دقة ±1 دقيقة"
+  },
+  "performance_ur": {
+    "execution_time": "10 مللی سیکنڈ سے کم",
+    "memory_usage": "100 کلوبائٹ سے کم",
+    "package_size": "50 کلوبائٹ سے کم",
+    "accuracy": "±1 منٹ کی درستگی"
+  },
+  "compliance": {
+    "islamic_authorities": [
+      "Muslim World League",
+      "Islamic Society of North America",
+      "Egyptian General Authority",
+      "Umm Al-Qura University",
+      "University of Islamic Sciences"
+    ],
+    "islamic_authorities_ar": [
+      "رابطة العالم الإسلامي",
+      "الجمعية الإسلامية لأمريكا الشمالية",
+      "الهيئة المصرية العامة للمساحة",
+      "جامعة أم القرى",
+      "جامعة العلوم الإسلامية"
+    ],
+    "islamic_authorities_ur": [
+      "رابطہ عالم اسلامی",
+      "اسلامک سوسائٹی آف نارتھ امریکا",
+      "مصری عام سروے اتھارٹی",
+      "جامعہ ام القریٰ",
+      "جامعہ علوم اسلامیہ"
+    ],
+    "standards": ["ISO 8601", "RFC 3339"],
+    "astronomical_references": [
+      "Astronomical Algorithms by Jean Meeus",
+      "Islamic Astronomical Calculations"
+    ]
+  },
+  "pakistani_cities": {
+    "major_cities": [
+      {
+        "name": "کراچی",
+        "name_en": "Karachi",
+        "latitude": 24.8607,
+        "longitude": 67.0011,
+        "timezone": 5,
+        "province": "سندھ"
+      },
+      {
+        "name": "لاہور",
+        "name_en": "Lahore",
+        "latitude": 31.5497,
+        "longitude": 74.3436,
+        "timezone": 5,
+        "province": "پنجاب"
+      },
+      {
+        "name": "اسلام آباد",
+        "name_en": "Islamabad",
+        "latitude": 33.6844,
+        "longitude": 73.0479,
+        "timezone": 5,
+        "province": "وفاقی دارالحکومت"
+      },
+      {
+        "name": "راولپنڈی",
+        "name_en": "Rawalpindi",
+        "latitude": 33.5651,
+        "longitude": 73.0169,
+        "timezone": 5,
+        "province": "پنجاب"
+      },
+      {
+        "name": "فیصل آباد",
+        "name_en": "Faisalabad",
+        "latitude": 31.4504,
+        "longitude": 73.1350,
+        "timezone": 5,
+        "province": "پنجاب"
+      },
+      {
+        "name": "ملتان",
+        "name_en": "Multan",
+        "latitude": 30.1575,
+        "longitude": 71.5249,
+        "timezone": 5,
+        "province": "پنجاب"
+      },
+      {
+        "name": "پشاور",
+        "name_en": "Peshawar",
+        "latitude": 34.0151,
+        "longitude": 71.5249,
+        "timezone": 5,
+        "province": "خیبر پختونخوا"
+      },
+      {
+        "name": "کوئٹہ",
+        "name_en": "Quetta",
+        "latitude": 30.1798,
+        "longitude": 66.9750,
+        "timezone": 5,
+        "province": "بلوچستان"
+      }
+    ]
+  },
+  "urdu_localization": {
+    "font_families": [
+      "Jameel Noori Nastaleeq",
+      "Noto Nastaliq Urdu",
+      "Urdu Typesetting",
+      "Alvi Nastaleeq"
+    ],
+    "date_format": "dd/MM/yyyy",
+    "time_format": "12-hour",
+    "direction": "rtl",
+    "numerals": "arabic-indic"
+  }
+}

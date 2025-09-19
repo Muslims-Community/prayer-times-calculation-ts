@@ -1,0 +1,42 @@
+# Source files
+src/
+tests/
+examples/
+
+# Development files
+*.ts
+!*.d.ts
+tsconfig.json
+jest.config.js
+.eslintrc.json
+.prettierrc
+
+# Development dependencies
+node_modules/
+.npm
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (keep only README)
+docs/
+
+# Build artifacts (keep only dist)
+build/
+*.tsbuildinfo
